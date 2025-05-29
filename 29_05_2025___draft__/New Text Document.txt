@@ -1,0 +1,59 @@
+
+#define MAX_STRSTACK_SIZE 2048
+
+//STRSTACK
+char strStack[MAX_STRSTACK_SIZE][MAX_TOKEN_SIZE] = { '\0' };
+
+int strStackFirstFreeElementIndex = 0; // TODO: use reinit
+
+void getRuleIndex() {
+
+
+}
+
+void tableEmulator_() {
+
+}
+
+void getCurr(char ** currTapeElement, char** nextTapeElement, char** currStackElement) {
+
+
+}
+
+void scrollTapeOneTep(struct LexemInfo** currLexemInfoElement) {
+
+
+}
+
+void stackPush(char* stackNewElement) {
+
+
+}
+
+void stackPop() {
+
+
+}
+
+void syntax_prev__(struct LexemInfo* lexemInfoTable) {
+
+	char* currTapeElement, // struct LexemInfo*
+	*nextTapeElement, // struct LexemInfo*
+	*currStackElement;
+
+	getCurr(&currTapeElement, &nextTapeElement, &currStackElement);
+
+
+	//I
+	if (!strcmp(currTapeElement, currStackElement)) {
+		if (!strcmp(currTapeElement, currStackElement)) {
+			// ...
+		}
+	}
+	struct LexemInfo lexemInfoTable_;
+	lexemInfoTable_.tokenType == IDENTIFIER_LEXEME_TYPE;
+	lexemInfoTable_.tokenType == VALUE_LEXEME_TYPE;
+
+
+	//II
+}
