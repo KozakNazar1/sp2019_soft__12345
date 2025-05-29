@@ -1,8 +1,6 @@
 ﻿#define LA_IS  0
 #define LA_NOT 1 
 
-//     {{0, {"ident_terminal"}, {"labeled_point", 2, {"ident", "tokenCOLON"}}}},\
-
 //unsigned_value_terminal unsigned_value
 #define NEW__GRAMMAR_123 {\
 { LA_IS, {"ident_terminal"}, { "labeled_point",{\
@@ -23,10 +21,10 @@
 { LA_IS, {"ident_terminal"}, { "declaration_element",{\
     { LA_IS, {""}, 2, {"ident", "array_specify_optional"}}\
 }}},\
-{ LA_IS, {"["}, { "labeled_point",{\
+{ LA_IS, {"["}, { "array_specify_optional",{\
     { LA_IS, {""}, 1, {"array_specify"}}\
 }}},\
-{ LA_NOT, {"["}, { "labeled_point",{\
+{ LA_NOT, {"["}, { "array_specify_optional",{\
     { LA_IS, {""}, 1, {""}}\
 }}},\
 { LA_IS, {","}, { "other_declaration_ident",{\
@@ -35,35 +33,27 @@
 { LA_IS, {"INTEGER16"}, { "declaration",{\
     { LA_IS, {""}, 3, {"value_type", "declaration_element", "other_declaration_ident__iteration"}}\
 }}},\
-
-//other_declaration_ident__iteration(",") = other_declaration_ident, other_declaration_ident__iteration;
 { LA_IS, { "," }, { "other_declaration_ident__iteration",{\
     { LA_IS, {""}, 2, { "other_declaration_ident", "other_declaration_ident__iteration" }}\
 }}},\
-//other_declaration_ident__iteration(!",") = ε;
 { LA_NOT, { "," }, { "other_declaration_ident__iteration",{\
     { LA_IS, {""}, 0, { "" }}\
 }}},\
-//index_action("[") = "[", expression, "]";
 { LA_IS, { "[" }, { "index_action",{\
     { LA_IS, {""}, 3, { "[", "expression", "]" }}\
-} }},\
-//unary_operator("NOT") = "NOT";
+}}},\
 { LA_IS, { "NOT" }, { "unary_operator",{\
     { LA_IS, {""}, 1, { "NOT" }}\
-} }}, \
-//unary_operator("-") = "-";
+}}},\
 { LA_IS, { "-" }, { "unary_operator",{\
     { LA_IS, {""}, 1, { "-" }}\
-} }}, \
-//unary_operator("+") = "+";
+}}},\
 { LA_IS, { "+" }, { "unary_operator",{\
     { LA_IS, {""}, 1, { "+" }}\
-} }}, \
-//unary_operation("NOT", "+", "-") = unary_operator, expression;
+}}},\
 { LA_IS, { "NOT", "+", "-" }, { "unary_operation",{\
     { LA_IS, {""}, 2, { "unary_operator", "expression" }}\
-} }}, \
+}}},\
 //binary_operator("AND") = "AND";
 { LA_IS, { "AND" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "AND" }}\
@@ -423,13 +413,6 @@ body_for_false_optional(!"ELSE") = ε;
 {LA_IS, { "-" }, { "labeled_point", {\
     {LA_IS, {""}, 1, {"-"} }\
 }}},\
-
-\
-    {"value", 1, {"value_terminal"}},\
-\
-    //{"ident", 1, {"ident_terminal"}},\
-\
-    {"", 2, {"",""}}\
 \
 },\
 176,\
