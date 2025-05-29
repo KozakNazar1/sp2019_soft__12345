@@ -96,7 +96,7 @@
     {LA_IS, { "" }, 1, { "unary_operation" }}\
 }}},\
 {LA_IS, { "+", "-" }, { "left_expression",{\
-    {LA_IS,  { "unsigned_value_terminal"}, 1, { "value" }}\
+    {LA_IS,  { "unsigned_value_terminal"}, 1, { "value" }},\
     {LA_NOT, { "unsigned_value_terminal" }, 1, { "unary_operation" }}\
 }}},\
 {LA_IS, { "ident_terminal" }, { "left_expression",{\
@@ -145,7 +145,7 @@
     {LA_IS, {""}, 5, { "IF", "if_expression", "body_for_true", "false_cond_block_without_else__iteration", "body_for_false_optional" }}\
 }}},\
 {LA_IS, { "ELSE" }, { "false_cond_block_without_else__iteration",{\
-    {LA_IS, {"IF"}, 2, { "false_cond_block_without_else", "false_cond_block_without_else__iteration" }}\
+    {LA_IS, {"IF"}, 2, { "false_cond_block_without_else", "false_cond_block_without_else__iteration" }},\
     {LA_NOT, { "IF" }, 0, { "" }}\
 }}},\
 {LA_NOT, { "ELSE" }, { "false_cond_block_without_else__iteration",{\
@@ -173,7 +173,7 @@
     {LA_IS, {""}, 3, { "cycle_begin_expression", "=:", "cycle_counter" }}\
 }}},\
 {LA_IS, { "ident_terminal" }, { "cycle_counter_init",{\
-    {LA_IS, {":="}, 1, { "cycle_counter_rl_init" }}\
+    {LA_IS, {":="}, 1, { "cycle_counter_rl_init" }},\
     {LA_NOT, { ":=" }, 1, { "cycle_counter_lr_init" }}\
 }}},\
 {LA_IS, { "(", "NOT", "+", "-", "unsigned_value_terminal" }, { "cycle_counter_init",{\
@@ -237,9 +237,9 @@
     {LA_IS, { "" }, 2, {"PUT", "expression"} }\
 }}},\
 {LA_IS, { "ident_terminal" }, { "statement", {\
-    { LA_IS, { ":=" }, 1, {"bind_right_to_left"} },\
-    { LA_IS, { ":" }, 1, {"labeled_point"} },\
-    { LA_NOT, { ":=", ":" }, 1, {"bind_left_to_right"} } \
+    { LA_IS, { ":=" }, 1, {"bind_right_to_left"}},\
+    { LA_IS, { ":" }, 1, {"labeled_point"}},\
+    { LA_NOT, { ":=", ":" }, 1, {"bind_left_to_right"}} \
 }}},\
 {LA_IS, { "(", "NOT", "unsigned_value_terminal", "+", "-" }, { "statement", {\
     { LA_IS, {""}, 1, {"bind_left_to_right"}}\
@@ -306,7 +306,7 @@
 }}},\
 {LA_IS, { "-" }, { "sign", {\
     {LA_IS, {""}, 1, {"-"} }\
-}}},\
+}}}\
 \
 },\
 100,\
