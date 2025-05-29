@@ -189,116 +189,83 @@
 {LA_IS, { "DO" }, { "forto_cycle",{\
     {LA_IS, {""}, 5, { "FOR", "cycle_counter_init", "TO", "cycle_counter_last_value", "cycle_body" }}\
 }}},\
-//statement_in_while_and_if_body(ident_terminal, "(", "NOT", UNSIGNED_VALUE, "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";") = statement;
 {LA_IS, { "ident_terminal", "(", "NOT", "unsigned_value_terminal", "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";" }, { "statement_in_while_and_if_body",{\
     {LA_IS, {""}, 1, { "statement" }}\
 }}},\
-//statement_in_while_and_if_body("CONTINUE") = "CONTINUE";
 {LA_IS, { "CONTINUE" }, { "statement_in_while_and_if_body",{\
     {LA_IS, {""}, 1, { "CONTINUE" }}\
 }}},\
-//statement_in_while_and_if_body("BREAK") = "BREAK";
 {LA_IS, { "BREAK" }, { "statement_in_while_and_if_body",{\
     {LA_IS, {""}, 1, { "BREAK" }}\
 }}},\
-//block_statements_in_while_and_if_body("{") = "{", statement_in_while_and_if_body__iteration, "}";
 {LA_IS, { "{" }, { "block_statements_in_while_and_if_body",{\
     {LA_IS, {""}, 3, { "{", "statement_in_while_and_if_body__iteration", "}" }}\
 }}},\
-//statement_in_while_and_if_body__iteration(ident_terminal, "(", "NOT", UNSIGNED_VALUE, "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";", "CONTINUE", "BREAK") = statement_in_while_and_if_body, statement_in_while_and_if_body__iteration;
 {LA_IS, { "ident_terminal", "(", "NOT", "unsigned_value_terminal", "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";", "CONTINUE", "BREAK" }, { "statement_in_while_and_if_body__iteration",{\
     {LA_IS, {""}, 2, { "statement_in_while_and_if_body", "statement_in_while_and_if_body__iteration" }}\
 }}},\
-//statement_in_while_and_if_body__iteration(!(ident_terminal, "(", "NOT", UNSIGNED_VALUE, "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";", "CONTINUE", "BREAK")) = ε;
 {LA_NOT, { "ident_terminal", "(", "NOT", "unsigned_value_terminal", "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";", "CONTINUE", "BREAK" }, { "statement_in_while_and_if_body__iteration",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
-//while_cycle_head_expression("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = expression;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "while_cycle_head_expression",{\
     {LA_IS, {""}, 1, { "expression" }}\
 }}},\
-//while_cycle("WHILE") = "WHILE", while_cycle_head_expression, block_statements_in_while_and_if_body;
 {LA_IS, { "WHILE" }, { "while_cycle",{\
     {LA_IS, {""}, 3, { "WHILE", "while_cycle_head_expression", "block_statements_in_while_and_if_body" }}\
 }}},\
-//repeat_until_cycle_cond("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = expression;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "repeat_until_cycle_cond",{\
     {LA_IS, {""}, 1, { "expression" }}\
 }}},\
-//repeat_until_cycle("REPEAT") = "REPEAT", statement__or__block_statements, "UNTIL", repeat_until_cycle_cond;
 {LA_IS, { "REPEAT" }, { "repeat_until_cycle",{\
     {LA_IS, {""}, 4, { "REPEAT", "statement__or__block_statements", "UNTIL", "repeat_until_cycle_cond" }}\
-} }}, \
-//statement__or__block_statements(ident_terminal, "(", "NOT", UNSIGNED_VALUE, "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";") = statement;
+}}},\
 {LA_IS, { "ident_terminal", "(", "NOT", "unsigned_value_terminal", "+", "-", "IF", "FOR", "WHILE", "REPEAT", "GOTO", "GET", "PUT", ";" }, { "statement__or__block_statements",{\
     {LA_IS, {""}, 1, { "statement" }}\
-} }}, \
-//statement__or__block_statements("{") = block_statements;
+}}},\
 {LA_IS, { "{" }, { "statement__or__block_statements",{\
     {LA_IS, {""}, 1, { "block_statements" }}\
 }}},\
-//input("GET") = "GET", argument_for_input;
 {LA_IS, { "GET" }, { "input",{\
     {LA_IS, {""}, 2, { "GET", "argument_for_input" }}\
 }}},\
-//argument_for_input(ident_terminal) = ident, index_action_optional;
 {LA_IS, { "ident_terminal" }, { "argument_for_input",{\
     {LA_IS, {""}, 2, { "ident", "index_action_optional" }}\
 }}},\
-//argument_for_input("(") = "(", ident, index_action_optional, ")";
 {LA_IS, { "(" }, { "argument_for_input",{\
     {LA_IS, {""}, 4, { "(", "ident", "index_action_optional", ")" }}\
 }}},\
-//output("PUT") = "PUT", expression;
 {LA_IS, { "PUT" }, { "output", {\
     {LA_IS, { "" }, 2, {"PUT", "expression"} }\
 }}},\
-//statement(ident_terminal) =
-//([+1]":=") : bind_right_to_left;
-//([+1]":") : labeled_point;
-//(default) : bind_left_to_right;
 {LA_IS, { "ident_terminal" }, { "statement", {\
     { LA_IS, { ":=" }, 1, {"bind_right_to_left"} },\
     { LA_IS, { ":" }, 1, {"labeled_point"} },\
     { LA_NOT, { ":=", ":" }, 1, {"bind_left_to_right"} } \
 }}},\
-//statement("(", "NOT", IDENT, UNSIGNED_VALUE, "+", "-") = bind_left_to_right;
-{LA_IS, { "(", "NOT", "ident_terminal", "unsigned_value_terminal", "+", "-" }, { "statement", {\
+{LA_IS, { "(", "NOT", "unsigned_value_terminal", "+", "-" }, { "statement", {\
     { LA_IS, {""}, 1, {"bind_left_to_right"}}\
 }}},\
-//statement("IF") = cond_block;
 {LA_IS, { "IF" }, { "statement",{\
     {LA_IS, {""}, 1, {"cond_block"}}\
 }}},\
-//statement("FOR") = forto_cycle;
 {LA_IS, { "FOR" }, { "statement",{\
     {LA_IS, {""}, 1, {"forto_cycle"}}\
 }}},\
-//statement("WHILE") = while_cycle;
 {LA_IS, { "WHILE" }, { "statement",{\
     {LA_IS, {""}, 1, {"while_cycle"}}\
 }}},\
-//statement("REPEAT") = repeat_until_cycle;
 {LA_IS, { "REPEAT" }, { "statement",{\
     {LA_IS, {""}, 1, {"repeat_until_cycle"}}\
 }}},\
-//statement("ient_terminal") = labeled_point;
-{LA_IS, { "ient_terminal" }, { "statement",{\
-    {LA_IS, {""}, 1, {"labeled_point"}}\
-}}},\
-//statement("GOTO") = goto_label;
 {LA_IS, { "GOTO" }, { "statement",{\
     {LA_IS, {""}, 1, {"goto_label"}}\
 }}},\
-//statement("GET") = input;
 {LA_IS, { "GET" }, { "statement",{\
     {LA_IS, {""}, 1, {"input"}}\
 }}},\
-//statement("PUT") = output;
 {LA_IS, { "PUT" }, { "statement",{\
     {LA_IS, {""}, 1, {"output"}}\
 }}},\
-//statement(";") = ";";
 {LA_IS, { ";" }, { "statement",{\
     {LA_IS, {""}, 1, {";"}}\
 }}},\
