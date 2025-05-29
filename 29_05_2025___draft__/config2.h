@@ -4,7 +4,7 @@
 //unsigned_value_terminal unsigned_value
 #define NEW__GRAMMAR_123 {\
 { LA_IS, {"ident_terminal"}, { "labeled_point",{\
-    { LA_IS, {""}, 2, {"ident", "tokenCOLON"}}\
+    { LA_IS, {""}, 2, {"ident", ":"}}\
 }}},\
 { LA_IS, {"GOTO"}, { "goto_label",{\
     { LA_IS, {""}, 2, {"GOTO", "ident"}}\
@@ -54,70 +54,66 @@
 { LA_IS, { "NOT", "+", "-" }, { "unary_operation",{\
     { LA_IS, {""}, 2, { "unary_operator", "expression" }}\
 }}},\
-//binary_operator("AND") = "AND";
 { LA_IS, { "AND" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "AND" }}\
-} }}, \
-//binary_operator("OR") = "OR";
+}}},\
 { LA_IS, { "OR" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "OR" }}\
-} }}, \
-//binary_operator("==") = "==";
+}}},\
 { LA_IS, { "==" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "==" }}\
-} }}, \
-//binary_operator("!=") = "!=";
+}}},\
 { LA_IS, { "!=" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "!=" }}\
-} }}, \
-//binary_operator("<=") = "<=";
+}}},\
 { LA_IS, { "<=" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "<=" }}\
-} }}, \
-b//inary_operator(">=") = ">=";
+}}},\
 { LA_IS, { ">=" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { ">=" }}\
-} } }, \
-//binary_operator("+") = "+";
+}}},\
 { LA_IS, { "+" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "+" }}\
-} }}, \
-//binary_operator("-") = "-";
+}}},\
 { LA_IS, { "-" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "-" }}\
-} }}, \
-//binary_operator("*") = "*";
+}}},\
 { LA_IS, { "*" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "*" }}\
-} }}, \
-//binary_operator("DIV") = "DIV";
+}}},\
 { LA_IS, { "DIV" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "DIV" }}\
-} }}, \
-//binary_operator("MOD") = "MOD";
+}}},\
 { LA_IS, { "MOD" }, { "binary_operator",{\
     { LA_IS, {""}, 1, { "MOD" }}\
-} }}, \
-//binary_action("AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD") = binary_operator, expression;
+}}},\
 { LA_IS, { "AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD" }, { "binary_action",{\
     { LA_IS, {""}, 2, { "binary_operator", "expression" }}\
-} }}, \
-//left_expression("(") = group_expression;
+}}},\
+
+
+
+
 {LA_IS, { "(" }, { "left_expression",{\
-    {LA_IS, {""}, 1, { "group_expression" }}\
+    {LA_IS, { "" }, 1, { "group_expression" }}\
 }}},\
-//left_expression("NOT", "+", "-") = unary_operation;
-{LA_IS, { "NOT", "+", "-" }, { "left_expression",{\
-    {LA_IS, {""}, 1, { "unary_operation" }}\
+{LA_IS, { "NOT" }, { "left_expression",{\
+    {LA_IS, { "" }, 1, { "unary_operation" }}\
 }}},\
-//left_expression(ident_terminal) = ident, index_action_optional;
+{LA_IS, { "+", "-" }, { "left_expression",{\
+    {LA_IS,  { "unsigned_value_terminal"}, 1, { "value" }}\
+    {LA_NOT, { "unsigned_value_terminal" }, 1, { "unary_operation" }}\
+}}},\
 {LA_IS, { "ident_terminal" }, { "left_expression",{\
     {LA_IS, {""}, 2, { "ident", "index_action_optional" }}\
 }}},\
-//left_expression(unsigned_value_terminal, "+", "-") = value;
-{LA_IS, { "unsigned_value_terminal", "+", "-" }, { "left_expression",{\
+{LA_IS, { "unsigned_value_terminal" }, { "left_expression",{\
     {LA_IS, {""}, 1, { "value" }}\
 }}},\
+
+
+
+
 //index_action_optional("[") = index_action;
 {LA_IS, { "[" }, { "index_action_optional",{\
     {LA_IS, {""}, 1, { "index_action" }}\
@@ -373,14 +369,6 @@ body_for_false_optional(!"ELSE") = ε;
 }}},\
 
 
-
-
-
-
-
-
-
-
 //unsigned_value(unsigned_value_terminal) = unsigned_value_terminal;
 {LA_IS, { "unsigned_value_terminal" }, { "unsigned_value", {\
     {LA_IS, { "" }, 1, { "unsigned_value_terminal" }}\
@@ -399,18 +387,13 @@ body_for_false_optional(!"ELSE") = ε;
 }}},\
 
 
-
-
-//ident(ident_terminal) = ident_terminal;
 {LA_IS, { "ident_terminal" }, { "ident", {\
     {LA_IS, {""}, 1, {"ident_terminal"} }\
 }}},\
-//sign("+") = "+";
-{LA_IS, { "+" }, { "labeled_point", {\
+{LA_IS, { "+" }, { "sign", {\
     {LA_IS, {""}, 1, {"+"}}\
-}}}, \
-//sign("-") = "-";
-{LA_IS, { "-" }, { "labeled_point", {\
+}}},\
+{LA_IS, { "-" }, { "sign", {\
     {LA_IS, {""}, 1, {"-"} }\
 }}},\
 \
