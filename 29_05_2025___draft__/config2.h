@@ -90,10 +90,6 @@
 { LA_IS, { "AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD" }, { "binary_action",{\
     { LA_IS, {""}, 2, { "binary_operator", "expression" }}\
 }}},\
-
-
-
-
 {LA_IS, { "(" }, { "left_expression",{\
     {LA_IS, { "" }, 1, { "group_expression" }}\
 }}},\
@@ -110,121 +106,86 @@
 {LA_IS, { "unsigned_value_terminal" }, { "left_expression",{\
     {LA_IS, {""}, 1, { "value" }}\
 }}},\
-
-
-
-
-//index_action_optional("[") = index_action;
 {LA_IS, { "[" }, { "index_action_optional",{\
     {LA_IS, {""}, 1, { "index_action" }}\
 }}},\
-//index_action_optional(!"[") = ε;
 {LA_NOT, { "[" }, { "index_action_optional",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
-//expression("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = left_expression, binary_action__iteration;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "expression",{\
     {LA_IS, {""}, 2, { "left_expression", "binary_action__iteration" }}\
 }}},\
-binary_action__iteration("AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD") = binary_action, binary_action__iteration;
 {LA_IS, { "AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD" }, { "binary_action__iteration",{\
     {LA_IS, {""}, 2, { "binary_action", "binary_action__iteration" }}\
 }}},\
-binary_action__iteration(!("AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD")) = ε;
 {LA_NOT, { "AND", "OR", "==", "!=", "<=", ">=", "+", "-", "*", "DIV", "MOD" }, { "binary_action__iteration",{\
     {LA_IS, {""}, 0, { "" }}\
-} }}, \
-//group_expression("(") = "(", expression, ")";
+}}},\
 {LA_IS, { "(" }, { "group_expression",{\
     {LA_IS, {""}, 3, { "(", "expression", ")" }}\
 }}},\
-//bind_right_to_left(ident_terminal) = ident, index_action_optional, ":=", expression;
 {LA_IS, { "ident_terminal" }, { "bind_right_to_left",{\
     {LA_IS, {""}, 4, { "ident", "index_action_optional", ":=", "expression" }}\
 }}},\
-//bind_left_to_right("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = expression, "=:", ident, index_action_optional;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "bind_left_to_right",{\
     {LA_IS, {""}, 4, { "expression", "=:", "ident", "index_action_optional" }}\
 }}},\
-//if_expression("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = expression;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "if_expression",{\
     {LA_IS, {""}, 1, { "expression" }}\
 }}},\
-//body_for_true("{") = block_statements_in_while_and_if_body;
 {LA_IS, { "{" }, { "body_for_true",{\
     {LA_IS, {""}, 1, { "block_statements_in_while_and_if_body" }}\
 }}},\
-//false_cond_block_without_else("ELSE") = "ELSE", "IF", if_expression, body_for_true;
 {LA_IS, { "ELSE" }, { "false_cond_block_without_else",{\
     {LA_IS, {""}, 4, { "ELSE", "IF", "if_expression", "body_for_true" }}\
 }}},\
-//body_for_false("ELSE") = "ELSE", block_statements_in_while_and_if_body;
 {LA_IS, { "ELSE" }, { "body_for_false",{\
     {LA_IS, {""}, 2, { "ELSE", "block_statements_in_while_and_if_body" }}\
 }}},\
-//cond_block("IF") = "IF", if_expression, body_for_true, false_cond_block_without_else__iteration, body_for_false_optional;
 {LA_IS, { "IF" }, { "cond_block",{\
     {LA_IS, {""}, 5, { "IF", "if_expression", "body_for_true", "false_cond_block_without_else__iteration", "body_for_false_optional" }}\
 }}},\
-//false_cond_block_without_else__iteration("ELSE") =
-//([+1]"IF") : false_cond_block_without_else, false_cond_block_without_else__iteration;
-//([+1]!("IF")) : ε;
 {LA_IS, { "ELSE" }, { "false_cond_block_without_else__iteration",{\
     {LA_IS, {"IF"}, 2, { "false_cond_block_without_else", "false_cond_block_without_else__iteration" }}\
     {LA_NOT, { "IF" }, 0, { "" }}\
 }}},\
-//false_cond_block_without_else__iteration(!"ELSE") = ε;
 {LA_NOT, { "ELSE" }, { "false_cond_block_without_else__iteration",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
-//body_for_false_optional("ELSE") = body_for_false;
 {LA_IS, { "ELSE" }, { "body_for_false_optional",{\
     {LA_IS, {""}, 1, { "body_for_false" }}\
 }}},\
-body_for_false_optional(!"ELSE") = ε;
 {LA_NOT, { "ELSE" }, { "body_for_false_optional",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
-//cycle_begin_expression("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = expression;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "cycle_begin_expression",{\
     {LA_IS, {""}, 1, { "expression" }}\
 }}},\
-//cycle_end_expression("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = expression;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "cycle_end_expression",{\
     {LA_IS, {""}, 1, { "expression" }}\
 }}},\
-//cycle_counter(ident_terminal) = ident;
 {LA_IS, { "ident_terminal" }, { "cycle_counter",{\
     {LA_IS, {""}, 1, { "ident" }}\
 }}},\
-//cycle_counter_rl_init(ident_terminal) = cycle_counter, ":=", cycle_begin_expression;
 {LA_IS, { "ident_terminal" }, { "cycle_counter_rl_init",{\
     {LA_IS, {""}, 3, { "cycle_counter", ":=", "cycle_begin_expression" }}\
 }}},\
-//cycle_counter_lr_init("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = cycle_begin_expression, "=:", cycle_counter;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "cycle_counter_lr_init",{\
     {LA_IS, {""}, 3, { "cycle_begin_expression", "=:", "cycle_counter" }}\
 }}},\
-//cycle_counter_init(ident_terminal) =
-//([+1](":=")) : cycle_counter_rl_init;
-//([+1]!(":=")) : cycle_counter_lr_init;
 {LA_IS, { "ident_terminal" }, { "cycle_counter_init",{\
     {LA_IS, {":="}, 1, { "cycle_counter_rl_init" }}\
     {LA_NOT, { ":=" }, 1, { "cycle_counter_lr_init" }}\
 }}},\
-//cycle_counter_init("(", "NOT", "+", "-", UNSIGNED_VALUE) = cycle_counter_lr_init;
 {LA_IS, { "(", "NOT", "+", "-", "unsigned_value_terminal" }, { "cycle_counter_init",{\
     {LA_IS, {""}, 1, { "cycle_counter_lr_init" }}\
 }}},\
-//cycle_counter_last_value("(", "NOT", "+", "-", ident_terminal, UNSIGNED_VALUE) = cycle_end_expression;
 {LA_IS, { "(", "NOT", "+", "-", "ident_terminal", "unsigned_value_terminal" }, { "cycle_counter_last_value",{\
     {LA_IS, {""}, 1, { "cycle_end_expression" }}\
 }}},\
-//cycle_body("DO") = "DO", statement__or__block_statements;
 {LA_IS, { "DO" }, { "cycle_body",{\
     {LA_IS, {""}, 2, { "DO", "statement__or__block_statements" }}\
 }}},\
-//forto_cycle("FOR") = "FOR", cycle_counter_init, "TO", cycle_counter_last_value, cycle_body;
 {LA_IS, { "DO" }, { "forto_cycle",{\
     {LA_IS, {""}, 5, { "FOR", "cycle_counter_init", "TO", "cycle_counter_last_value", "cycle_body" }}\
 }}},\
