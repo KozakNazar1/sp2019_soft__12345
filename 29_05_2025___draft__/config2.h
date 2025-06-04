@@ -1,5 +1,5 @@
-﻿#define LA_IS  0
-#define LA_NOT 1 
+﻿#define LA_IS  2
+#define LA_NOT 4 
 
 #define GRAMMAR_LL2__2025 {\
 { LA_IS, {"ident_terminal"}, { "labeled_point",{\
@@ -24,7 +24,7 @@
     { LA_IS, {""}, 1, {"array_specify"}}\
 }}},\
 { LA_NOT, {"["}, { "array_specify_optional",{\
-    { LA_IS, {""}, 1, {""}}\
+    { LA_IS, {""}, 0, {""}}\
 }}},\
 { LA_IS, {","}, { "other_declaration_ident",{\
     { LA_IS, {""}, 2, {",", "declaration_element"}}\
