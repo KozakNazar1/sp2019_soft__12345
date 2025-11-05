@@ -1,0 +1,2 @@
+Configuration Properties → Debugging
+PATH=C:\Users\Nazar\source\repos\lab3\Debug;%PATH%
